@@ -310,24 +310,6 @@ if (User::isLoggedIn() && !(User::$info['verified_authy'] == 'Y' && !($_SESSION[
 			$form = new Form($form_name);
 			$form->verify();
 			$form->save();
-
-			if($form_name == "events")
-			{
-				if(empty($form->errors))
-				{
-					$mInfo = $_REQUEST[$form_name];
-					$mTitle = $mInfo['title'];
-
-					// Message payload
-					$msg_payload = array (
-						'mtitle' => $mTitle,
-						'mdesc' => $mTitle
-					);
-
-					$mResponse = sendMessage($msg_payload);
-				}
-			}
-
 			$form->show_errors();
 			$form->show_messages();
 		}
@@ -402,55 +384,5 @@ if (!$CFG->bypass || ($CFG->url == 'edit_page' && !$_REQUEST['tab_bypass'])) {
 	<div class="credits" id="credits"><div>&copy; 2011 <a href="http://www.organic.com.pa">Organic Technologies</a>. Derechos reservados.</div></div>
 	</body></html>'; 
 }
-
-
-
-	// Sends Push notification function for OneSignal
-	function sendMessage($data) {
-	    
-
-	    $heading = array(
-		   "en" => $data['mtitle']
-		);
-
-	    $content      = array(
-	        "en" => $data['mdesc']
-	    );
-
-
-	    $fields = array(
-	        'app_id' => "03bcf763-bfef-4d8c-b94c-ede01f1e18a1",
-	        'included_segments' => array(
-	            'All'
-	        ),
-	        'data' => array(
-	            "foo" => "bar"
-	        ),
-	        'contents' => $content,
-	        'headings' => $heading
-	    );
-	    
-	    $fields = json_encode($fields);
-	    //print("\nJSON sent:\n");
-	    //print($fields);
-	    
-	    $ch = curl_init();
-	    curl_setopt($ch, CURLOPT_URL, "https://onesignal.com/api/v1/notifications");
-	    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-	        'Content-Type: application/json; charset=utf-8',
-	        'Authorization: Basic YmUyZmI1YTMtYjk4My00ZTAzLWFlMmItZWE0OWEyZjNlZjdk'
-	    ));
-	    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-	    curl_setopt($ch, CURLOPT_HEADER, FALSE);
-	    curl_setopt($ch, CURLOPT_POST, TRUE);
-	    curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
-	    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-	    
-	    $response = curl_exec($ch);
-	    curl_close($ch);
-	    
-	    return $response;
-	}
-
 
 ?>
