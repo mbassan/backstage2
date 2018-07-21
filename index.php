@@ -381,7 +381,7 @@ if (User::isLoggedIn() && !(User::$info['verified_authy'] == 'Y' && !($_SESSION[
 
 					// Message payload
 					$msg_payload = array (
-						//'mtitle' => $mTitle,
+						'mtitle' => $mTitle,
 						'mdesc' => $mTitle
 					);
 
