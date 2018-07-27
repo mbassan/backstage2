@@ -394,6 +394,28 @@ if (User::isLoggedIn() && !(User::$info['verified_authy'] == 'Y' && !($_SESSION[
 					}
 				}
 			}
+			else if($submittedFormName == 'content')
+			{
+				if(isset($_REQUEST[$form_name]))
+				{
+					$mInfo = $_REQUEST[$form_name];
+					$mTitle = $mInfo['title'];
+
+					// Message payload
+					$msg_payload = array (
+						'mtitle' => "", //$mTitle,
+						'mdesc' => $mTitle
+					);
+
+					$mResponse = sendMessage($msg_payload);
+
+					if( strpos( $mResponse, 'error' ) !== false ){
+						//echo 'noErrorInPushNotification';
+					}else{
+						//echo 'ErrorInPushNotification';
+					}
+				}
+			}
 
 			//echo "ValueOfmResponse::".$mResponse;
 

@@ -2,6 +2,7 @@
 include 'lib/common.php';
 ini_set("memory_limit","200M");
 
+
 $CFG->print = $_REQUEST['print'];
 $CFG->url = ($_REQUEST['current_url'] != 'index.php') ? ereg_replace("[^a-zA-Z_\-]", "",$_REQUEST['current_url']) : '';
 $CFG->action = ereg_replace("[^a-zA-Z_\-]", "",$_REQUEST['action']);
@@ -304,6 +305,57 @@ if (User::isLoggedIn() && !(User::$info['verified_authy'] == 'Y' && !($_SESSION[
 	elseif ($CFG->url == 'my-account') {
 		include_once 'includes/account.php';
 	}
+	elseif ($CFG->url == 'notification') {
+		
+		echo "<br/>";
+		echo "<center>";
+
+		if(isset($_POST['pnSubmit'])) 
+		{
+	        $mTitle = $_POST['pnTitle'];
+	        $mBody  = $_POST['pnBody'];
+	        
+
+	        $mResponse = "NothingInHereForResponse";
+			
+			// Message payload
+			$msg_payload = array (
+			'mtitle' => $mTitle,
+			'mdesc' => $mBody
+			);
+
+			$mResponse = sendMessage($msg_payload);
+
+			if( strpos( $mResponse, 'error' ) !== false ){
+				echo "Some error occured during sending Notification, Please try sending again...";
+			}else{
+				echo "Notification sent successfully.";
+			} 
+		
+			//echo "ValueOfmResponse::".$mResponse;
+		}
+
+		echo "<br/>";
+		echo "<br/>";
+			
+			echo "<form class='form' action='index.php?is_tab=1&current_url=notification' method='POST'>";
+			
+				//echo "<input name='is_tab' value='1' type='hidden'/>";
+				//echo "<input name='current_url' value='events' type='hidden'/>";
+
+				echo "Title* : <input type='text' name='pnTitle' required />";
+				echo "<br/>";
+				echo "<br/>";
+				echo "Body * : <input type='text' name='pnBody' required />";
+				echo "<br/>";
+				echo "<br/>";
+				echo "<input type='submit' name='pnSubmit' value='Send Notification' />";
+
+			echo "</form>";
+		
+		echo "</center>";
+
+	}
 	else {
 		
 		$form_name = ereg_replace("[^a-zA-Z_\-]", "",$_REQUEST['form_name']);
@@ -329,7 +381,7 @@ if (User::isLoggedIn() && !(User::$info['verified_authy'] == 'Y' && !($_SESSION[
 
 					// Message payload
 					$msg_payload = array (
-						'mtitle' => $mTitle,
+						'mtitle' => "", //$mTitle,
 						'mdesc' => $mTitle
 					);
 
@@ -340,7 +392,7 @@ if (User::isLoggedIn() && !(User::$info['verified_authy'] == 'Y' && !($_SESSION[
 					}else{
 						//echo 'ErrorInPushNotification';
 					}
-				} 
+				}
 			}
 
 			//echo "ValueOfmResponse::".$mResponse;
