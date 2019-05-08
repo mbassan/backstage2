@@ -10,7 +10,7 @@ class Control {
 			return false;
 			
 		date_default_timezone_set($CFG->default_timezone);
-		String::magicQuotesOff();
+		String1::magicQuotesOff();
 
 		$page_id = (is_numeric($url)) ? $url : Control::getPageId($url,$is_tab);
 		if (!($page_id > 0))

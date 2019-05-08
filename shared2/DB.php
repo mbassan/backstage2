@@ -578,7 +578,7 @@ class DB {
 					if (is_array($value1))
 						$tokenizer_values = $value1;
 					elseif (strlen($value1) > 0)
-						$tokenizer_values = String::unFaux($value1);
+						$tokenizer_values = String1::unFaux($value1);
 					
 					if (is_array($tokenizer_values)) {
 						$sql .= " AND (";
@@ -652,7 +652,7 @@ class DB {
 		if ($filters) { 
 			foreach ($filters as $filter) {
 				if ($filter) {
-					$filter = String::doFormulaReplacements($filter);
+					$filter = String1::doFormulaReplacements($filter);
 					$filter = self::replaceTables($filter,$joined_tables);
 					$sql .= " AND $filter ";
 				}
@@ -745,7 +745,7 @@ class DB {
 	
 	// must put vars in braces
 	public static function getAggregateRow($name,$formula,$table,$record_id) {
-		$matches = String::getSubstring($formula,'[',']');
+		$matches = String1::getSubstring($formula,'[',']');
 		foreach ($matches as $match) {
 			if (strstr($match,','))  {
 				$join_path = explode(',',$f_id_field);
@@ -827,7 +827,7 @@ class DB {
 		}
 		
 		if (!$CFG->backstage_mode)
-			$fields_array = array_map('mysql_real_escape_string',$fields_array);
+			$fields_array = array_map('filter_var',$fields_array);
 		
 		$insert_id = db_insert($table,$fields_array);
 		
@@ -920,7 +920,7 @@ class DB {
 			}
 		}
 		if (!$CFG->backstage_mode)
-			$fields_array = array_map('mysql_real_escape_string',$fields_array);
+			$fields_array = array_map('filter_var',$fields_array);
 			
 		$num_affected = db_update($table,$id,$fields_array);
 		if ($cats_array) {
@@ -1460,7 +1460,7 @@ class DB {
 			$table_fields = json_decode(urldecode($table_fields),true);
 		
 		$concat_char = ($concat_char) ? $concat_char : ' ';
-		$search_term = mysql_escape_string($search_term);
+		$search_term = filter_var($search_term, FILTER_SANITIZE_STRING);
 		$sql = "SELECT ";
 		if (is_array($table_fields)) {
 			$sql .= "{$table}.id,";

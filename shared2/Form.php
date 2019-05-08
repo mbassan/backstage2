@@ -1274,7 +1274,7 @@ class Form {
 						$value = 'array:'.implode('|||',$value2);
 					}
 					elseif (strlen($value1) > 0) {
-						$tokenizer_values = String::unFaux($value1);
+						$tokenizer_values = String1::unFaux($value1);
 					}
 				}
 				else {
@@ -1865,7 +1865,7 @@ class Form {
 	function button($url=false,$value=false,$variables=false,$target_elem_id=false,$id=false,$class = false, $jscript = false, $style = false,$disable_if_no_record_id=false,$disable_if_cant_edit=false,$static=false,$update_variable_values=false,$bypass_create_record=false) {
 		global $CFG;
 		
-		$variables1 = String::parseVariables($variables,$this->info,$this->record_id,$url,$update_variable_values);
+		$variables1 = String1::parseVariables($variables,$this->info,$this->record_id,$url,$update_variable_values);
 		$variables1['current_url'] = $url;
 		
 		$permission_level = ($variables1['action'] == 'form') ? 2 : 1;
@@ -1918,7 +1918,7 @@ class Form {
 	function link($url=false,$caption=false,$variables=false,$target_elem_id=false,$class=false,$disable_if_no_record_id=false,$disable_if_cant_edit=false) {
 		global $CFG;
 		
-		$variables1 = String::parseVariables($variables,$this->info,$this->record_id,$url);
+		$variables1 = String1::parseVariables($variables,$this->info,$this->record_id,$url);
 		$variables1['bypass_save'] = 1;
 		$permission_level = ($variables1['action'] == 'form') ? 2 : 1;
 		$disabled = (User::permission(0,0,$url,false,$variables1['is_tab']) <= $permission_level);
@@ -1939,7 +1939,7 @@ class Form {
 		
 		preg_match_all("/\[([A-Za-z0-9-_]+)\]/",$caption,$variables);
 		$variables[1] = array_combine($variables[1],$variables[1]);
-		$variables1 = String::parseVariables($variables[1],$this->info,$this->record_id);
+		$variables1 = String1::parseVariables($variables[1],$this->info,$this->record_id);
 		if (is_array($variables[1])) {
 			foreach ($variables[1] as $key) {
 				$caption = str_ireplace("[{$key}]",$variables1[$key],$caption);
@@ -2054,7 +2054,7 @@ class Form {
 			$method_name = self::peLabel($CFG->method_id,'startArea');
 		}
 		
-		$matches = String::getSubstring($legend,'[',']');
+		$matches = String1::getSubstring($legend,'[',']');
 		if (is_array($matches)) {
 			foreach ($matches as $match) {
 				if(@array_key_exists($match,$this->info)) {
@@ -2132,7 +2132,7 @@ class Form {
 		else {
 			if ($only_admin) {
 				if ($condition) {
-					$condition = String::doFormulaReplacements($condition,$this->info,1,1);
+					$condition = String1::doFormulaReplacements($condition,$this->info,1,1);
 					$restricted = ($restricted) ? $restricted : @eval("if ({$condition}) { return 0;} else { return 1;}");
 				}
 			}
@@ -2189,7 +2189,7 @@ class Form {
 				}
 				
 				if ($condition) {
-					$condition = String::doFormulaReplacements($condition,$this->info,1,1);
+					$condition = String1::doFormulaReplacements($condition,$this->info,1,1);
 					$restricted = ($restricted) ? $restricted : eval("if ({$condition}) { return 0;} else { return 1;}");
 				}
 			}
@@ -3040,7 +3040,7 @@ class Form {
 							elseif (!$CFG->backstage_mode) {
 								if ($_REQUEST['db_fields'][$name] == 'vchar' || $_REQUEST['db_fields'][$name] == 'int') {
 									$delete_whitespace = @in_array($name,$this->delete_whitespace);
-									if (String::sanitize($value,true,$delete_whitespace)) {
+									if (String1::sanitize($value,true,$delete_whitespace)) {
 										$this->errors[$name] = $CFG->verify_invalid_char_error;
 									}
 								}	
@@ -3386,7 +3386,7 @@ class Form {
 			return true;
 
 		if ($send_condition) {
-			$send_condition = String::doFormulaReplacements($send_condition,$this->info,1);
+			$send_condition = String1::doFormulaReplacements($send_condition,$this->info,1);
 			if (!@eval("if ($send_condition) { return 1;} else { return 0;}"))
 				return false;
 		}
@@ -3449,7 +3449,7 @@ class Form {
 		}
 
 		if ($send_condition) {
-			$send_condition = String::doFormulaReplacements($send_condition,$this->info,1);
+			$send_condition = String1::doFormulaReplacements($send_condition,$this->info,1);
 			if (!eval("if ($send_condition) { return 1;} else { return 0;}"))
 				return false;
 		}
@@ -3588,7 +3588,7 @@ class Form {
 							if ($this->record_created)
 								$this->old_info['id'] = $this->record_id;
 							
-							$formula = String::doFormulaReplacements($old_field,$this->old_info,1);
+							$formula = String1::doFormulaReplacements($old_field,$this->old_info,1);
 							$insert_values[$new_field] = eval("return ($formula);");
 						}
 						elseif ($old_field == 'current_url') {
@@ -3663,7 +3663,7 @@ class Form {
 		$j_parts = explode('(',$jscript);
 		$j_parts1 = explode(')',$j_parts[1]);
 		$operation = $j_parts1[0];
-		$matches = String::getSubstring($jscript,'[',']');
+		$matches = String1::getSubstring($jscript,'[',']');
 		if (is_array($matches)) {
 			$variables = 'var variables = new Array();';
 	
@@ -3873,7 +3873,7 @@ class Form {
 		$this->filters[] = array('type'=>'month','field_name'=>$field_name,'caption'=>$caption,'language'=>$language);
 		$CFG->o_method_id = $CFG->method_id;
 		$CFG->o_method_name = 'filterMonth';
-		self::selectInput($field_name.'_month',$caption,false,false,String::getMonthNames($language));
+		self::selectInput($field_name.'_month',$caption,false,false,String1::getMonthNames($language));
 		$CFG->o_method_suppress = true;
 		self::HTML('<input type="hidden" name="month_fields[]" value="'.$field_name.'_month" />');
 		$CFG->o_method_suppress = true;

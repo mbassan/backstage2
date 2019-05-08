@@ -201,7 +201,7 @@ class Gallery {
 		}
 	
 		if(strstr($url, "<embed")) {
-			$url = String::getUrlFromEmbed($url);
+			$url = String1::getUrlFromEmbed($url);
 		}
 		
 		$path = pathinfo($url);

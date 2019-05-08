@@ -1,6 +1,6 @@
 <?php
 include'lib/common.php';
-String::magicQuotesOff();
+String1::magicQuotesOff();
 
 if (!empty($_REQUEST['form_name'])) {
 	$f_name = $_REQUEST['form_name'];

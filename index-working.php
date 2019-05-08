@@ -4,12 +4,12 @@ ini_set("memory_limit","200M");
 
 
 $CFG->print = $_REQUEST['print'];
-$CFG->url = ($_REQUEST['current_url'] != 'index.php') ? ereg_replace("[^a-zA-Z_\-]", "",$_REQUEST['current_url']) : '';
-$CFG->action = ereg_replace("[^a-zA-Z_\-]", "",$_REQUEST['action']);
+$CFG->url = ($_REQUEST['current_url'] != 'index.php') ? preg_replace("[^a-zA-Z_\-]", "",$_REQUEST['current_url']) : '';
+$CFG->action = preg_replace("[^a-zA-Z_\-]", "",$_REQUEST['action']);
 $CFG->bypass = ($_REQUEST['bypass'] || $CFG->print);
 $CFG->is_tab = (!$CFG->url) ? 1 : $_REQUEST['is_tab'];
-$CFG->id = ereg_replace("[^0-9]", "",$_REQUEST['id']);
-$CFG->target_elem = ereg_replace("[^a-zA-Z_\-]", "",$_REQUEST['target_elem']);
+$CFG->id = preg_replace("[^0-9]", "",$_REQUEST['id']);
+$CFG->target_elem = preg_replace("[^a-zA-Z_\-]", "",$_REQUEST['target_elem']);
 $CFG->in_popup = ($CFG->target_elem == 'edit_box' || $CFG->target_elem == 'message_box' || $CFG->target_elem == 'attributes box');
 $CFG->inset_id = false;
 
@@ -17,7 +17,7 @@ $_SESSION['last_query'] = $_SESSION['this_query'];
 $_SESSION['this_query'] = 'index.php?'.http_build_query((is_array($_POST)) ? $_POST : $_GET);
 
 date_default_timezone_set($CFG->default_timezone);
-String::magicQuotesOff();
+String1::magicQuotesOff();
 
 if ($CFG->locale) {
 	setlocale(LC_ALL,$CFG->locale);
@@ -283,7 +283,7 @@ if (User::isLoggedIn() && !(User::$info['verified_authy'] == 'Y' && !($_SESSION[
 	}
 	
 	if (!$_REQUEST['inset_id'] && !$_REQUEST['cal_bypass'] && !$_REQUEST['fm_bypass'] && $CFG->url != 'edit_page' && !$CFG->print)
-		String::showPath();
+		String1::showPath();
 		
 	Errors::display();
 	Messages::display();
@@ -358,7 +358,7 @@ if (User::isLoggedIn() && !(User::$info['verified_authy'] == 'Y' && !($_SESSION[
 	}
 	else {
 		
-		$form_name = ereg_replace("[^a-zA-Z_\-]", "",$_REQUEST['form_name']);
+		$form_name = preg_replace("[^a-zA-Z_\-]", "",$_REQUEST['form_name']);
 		
 		$submittedFormName = $_REQUEST['form_name'];
 
@@ -452,8 +452,8 @@ else {
 	';
 	
 	$l_form = new Form('loginform');
-	$l_form->info['user'] = ereg_replace("[^0-9a-zA-Z!@#$%&*?\.\-\_]", "",$l_form->info['user']);
-	$l_form->info['pass'] = ereg_replace("[^0-9a-zA-Z!@#$%&*?\.\-\_]", "",$l_form->info['pass']);
+	$l_form->info['user'] = preg_replace("[^0-9a-zA-Z!@#$%&*?\.\-\_]", "",$l_form->info['user']);
+	$l_form->info['pass'] = preg_replace("[^0-9a-zA-Z!@#$%&*?\.\-\_]", "",$l_form->info['pass']);
 	$l_form->textInput('user',$CFG->user_username,false,false,false,false,false,false,false,false,false,false,false,true);
 	$l_form->passwordInput('pass',$CFG->user_password);
 	$l_form->submitButton('submit','Log In');

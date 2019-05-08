@@ -52,7 +52,7 @@ class Calendar {
 				if (is_array($value1))
 					$this->tokenizers[$tokenizer] = $value1;
 				elseif (strlen($value1) > 0)
-					$this->tokenizers[$tokenizer] = String::unFaux($value1);
+					$this->tokenizers[$tokenizer] = String1::unFaux($value1);
 					
 				$this->filter_results[$tokenizer] = false;
 			}
@@ -339,8 +339,8 @@ class Calendar {
 						$e_val = ($etime_field) ? date('Y-m-d',$timestamp).' '.date('H:i:00', strtotime($event[$etime_field])) : $event[$edate_field];
 						$color_field = $this->tables[$table]['color_field'];
 						$color1 = (!empty($event[$color_field])) ? $event[$color_field] : $this->tables[$table]['color'];
-						$color2 = String::hexDarker($color1,30);
-						$color3 = String::hexDarker($color1,80);
+						$color2 = String1::hexDarker($color1,30);
+						$color3 = String1::hexDarker($color1,80);
 		
 						$top_open = (($s_time && $timestamp < $s_time) || ($day > 0 && date('Y-m-d',$timestamp) < date('Y-m-d',mktime(0,0,0,$this->m,$day,$this->y)))) ? 'top_open' : false;
 						$bottom_open = (($s_time && $e_val > $e_time) || ($day > 0 && date('Y-m-d',strtotime($e_val)) > date('Y-m-d',mktime(23,59,59,$this->m,$day,$this->y)))) ? 'bottom_open' : false;

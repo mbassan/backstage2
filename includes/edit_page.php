@@ -1,7 +1,7 @@
 <?php
 
 date_default_timezone_set($CFG->default_timezone);
-String::magicQuotesOff();
+String1::magicQuotesOff();
 
 if ($CFG->action != 'add_class') {
 	$pm = new PageMaker($_REQUEST['id'],$CFG->action,$CFG->is_tab);
@@ -92,7 +92,7 @@ else {
 			$name = $param->getName();
 			$required = ($param->isDefaultValueAvailable()) ? false : true;
 			if ($name == 'image_sizes' || $name == 'insert_array' || $name == 'formula_id_field' || ($name == 'variables') || ($m_name == 'addTable' && $name == 'filters')) {
-				$form->info['argument_'.$name] = String::fauxArray($form->info['argument_'.$name]);
+				$form->info['argument_'.$name] = String1::fauxArray($form->info['argument_'.$name]);
 				$form->textInput('argument_'.$name,ucfirst(str_replace('_',' ',$name)),$required,false,false,false,false,false,false,true);
 			}
 			elseif ($m_name == 'catSelect' && $name == 'input_type') {

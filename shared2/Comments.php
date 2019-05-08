@@ -166,7 +166,7 @@ class Comments {
 		$sql = "SELECT comments.* FROM {$this->table} ";
 
 		if ($sql_filter) {
-			$matches = String::getSubstring($sql_filter,'[',']');
+			$matches = String1::getSubstring($sql_filter,'[',']');
 			foreach ($matches as $match) {
 				if (strstr($match,','))  {
 					$join_path = explode(',',$match);
@@ -206,7 +206,7 @@ class Comments {
 		$sql .= " WHERE 1 ";
 		
 		if ($sql_filter) {
-			$sql_filter = String::doFormulaReplacements($sql_filter);
+			$sql_filter = String1::doFormulaReplacements($sql_filter);
 			$sql .= " AND (".$sql_filter.') ';
 		}
 		
@@ -265,7 +265,7 @@ class Comments {
 				$short = ($this->short_version) ? '_short' : '';
 				$icon = ($comment['type']) ? eval('return $CFG->comment_type_'.$comment['type'].';') : $CFG->comment_type_1;
 				$action = ($comment['type']) ? eval('return $CFG->comments_action_'.$comment['type'].$short.';') : $CFG->comments_wrote_label;
-				$action = String::doFormulaReplacements($action,unserialize($comment['f_table_row']),1,1);
+				$action = String1::doFormulaReplacements($action,unserialize($comment['f_table_row']),1,1);
 
 				echo '
 				<li id="comment_'.$comment['id'].'" class="level_'.$comment['type'].'">

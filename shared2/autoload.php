@@ -2,7 +2,7 @@
 
 include 'dblib.php';
 include 'stdlib.php';
-include('lib/session.php');
+//include('lib/session.php');
 
 function classLoader($class_name) {
 	global $CFG;

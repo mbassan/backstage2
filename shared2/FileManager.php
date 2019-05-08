@@ -343,12 +343,12 @@ class FileManager {
 				foreach ($this->data as $file) {
 					if ($file['alert_condition1']) {
 						$file_row = DB::getRecord($file['table'],$file['id']);
-						$condition = String::doFormulaReplacements($file['alert_condition1'],$file_row,1);
+						$condition = String1::doFormulaReplacements($file['alert_condition1'],$file_row,1);
 						$alert_class1 = (eval("if ($condition) { return 1;} else { return 0;}")) ? 'alert1' : '';
 					}
 					if ($file['alert_condition2']) {
 						$file_row = (is_array($file_row)) ? $file_row : DB::getRecord($file['table'],$file['id']);
-						$condition = String::doFormulaReplacements($file['alert_condition2'],$file_row,1);
+						$condition = String1::doFormulaReplacements($file['alert_condition2'],$file_row,1);
 						$alert_class2 = (eval("if ($condition) { return 1;} else { return 0;}")) ? 'alert2' : '';
 					}
 					
@@ -395,12 +395,12 @@ class FileManager {
 					if (array_key_exists('file_name',$row)) {
 						if ($row['alert_condition1']) {
 							$file_row = DB::getRecord($row['table'],$row['id']);
-							$condition = String::doFormulaReplacements($row['alert_condition1'],$file_row,1);
+							$condition = String1::doFormulaReplacements($row['alert_condition1'],$file_row,1);
 							$alert_class1 = (eval("if ($condition) { return 1;} else { return 0;}")) ? 'alert1' : '';
 						}
 						if ($row['alert_condition2']) {
 							$file_row = (is_array($file_row)) ? $file_row : DB::getRecord($row['table'],$row['id']);
-							$condition = String::doFormulaReplacements($row['alert_condition2'],$file_row,1);
+							$condition = String1::doFormulaReplacements($row['alert_condition2'],$file_row,1);
 							$alert_class2 = (eval("if ($condition) { return 1;} else { return 0;}")) ? 'alert2' : '';
 						}
 						$is_tab = ($row['link_is_tab']) ? $row['link_is_tab'] : 'false';
@@ -751,7 +751,7 @@ class FileManager {
 					case 'month':
 						$CFG->o_method_id = $filter['method_id'];
 						$CFG->o_method_name = 'filterMonth';
-						$form_filters->selectInput($name.'_month',$filter['caption'],false,false,String::getMonthNames($filter['language']));
+						$form_filters->selectInput($name.'_month',$filter['caption'],false,false,String1::getMonthNames($filter['language']));
 						$CFG->o_method_suppress = true;
 						$form_filters->HTML('<input type="hidden" name="month_fields[]" value="'.$name.'_month" />');
 						break;

@@ -1,6 +1,6 @@
 <?php
 	include'lib/common.php';
-	String::magicQuotesOff();
+	String1::magicQuotesOff();
 //print_ar($_REQUEST);
 	$action = $_REQUEST['action'];
 	if ($action == 'delete') {

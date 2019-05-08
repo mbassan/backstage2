@@ -1,7 +1,7 @@
 <?php
 
 
-class String {
+class String1 {
 	public static $open_tags,$missing;
 	
 	public static function substring($string,$length=0,$start=0) {
@@ -101,7 +101,7 @@ class String {
 		foreach ($array as $k=>$v) {
 			if (@strlen($v) > 0 || is_array($v)) {
 				if (is_array($v)) {
-					$ret[] = $k.'=>('.String::fauxArray($v,true).')';
+					$ret[] = $k.'=>('.String1::fauxArray($v,true).')';
 				}
 				else {
 					$ret[] = $k.'=>'.$v;
@@ -192,10 +192,10 @@ class String {
 	
 	public static function magicQuotesOff() {
 		if (get_magic_quotes_gpc()) {
-  			$_GET = String::stripQuotes($_GET);
-  			$_POST = String::stripQuotes($_POST);
-  			$_REQUEST = String::stripQuotes($_REQUEST);
-  			$_COOKIES = String::stripQuotes($_COOKIES);
+  			$_GET = String1::stripQuotes($_GET);
+  			$_POST = String1::stripQuotes($_POST);
+  			$_REQUEST = String1::stripQuotes($_REQUEST);
+  			$_COOKIES = String1::stripQuotes($_COOKIES);
 		}
 	}
 	
@@ -223,7 +223,7 @@ class String {
 	}
 	
 	public static function truncate($text, $length = 100, $ending = '...', $exact = false, $considerHtml = true) {
-		String::$open_tags = array();
+		String1::$open_tags = array();
 		if ($considerHtml) {
 			// if the plain text is shorter than the maximum length, return the whole text
 			if (strlen(preg_replace('/<.*?>/', '', $text)) <= $length) {
@@ -275,7 +275,7 @@ class String {
 						}
 					}
 					$truncate .= substr($line_matchings[2], 0, $left+$entities_length);
-					String::$missing = substr($line_matchings[2],$left+$entities_length);
+					String1::$missing = substr($line_matchings[2],$left+$entities_length);
 					// maximum lenght is reached, so get off the loop
 					break;
 				} else {
@@ -300,7 +300,7 @@ class String {
 			$spacepos = strrpos($truncate, ' ');
 			if (isset($spacepos)) {
 				// ...and cut the text in this position
-				String::$missing = substr($truncate,$spacepos).String::$missing;
+				String1::$missing = substr($truncate,$spacepos).String1::$missing;
 				$truncate = substr($truncate, 0, $spacepos);
 			}
 		}
@@ -312,7 +312,7 @@ class String {
 				$truncate .= '</' . $tag . '>';
 			}
 		}
-		String::$open_tags = $open_tags;
+		String1::$open_tags = $open_tags;
 		return $truncate;
 	}
 	
@@ -419,7 +419,7 @@ class String {
 	
 
 	public static function hexToRgb($hex) {
-		$hex = ereg_replace("#", "", $hex);
+		$hex = preg_replace("#", "", $hex);
 		$color = array();
 		
 		if(strlen($hex) == 3) {
@@ -438,7 +438,7 @@ class String {
 	function doFormulaReplacements($formula,$row=false,$directly_link_fields=false,$use_provided_row=false) {
 		global $CFG;
 
-		$matches = String::getSubstring($formula,'[',']');
+		$matches = String1::getSubstring($formula,'[',']');
 		$formula_parts = explode('}',$formula);
 		$dont_keep_squares = false;
 		if ($matches) {
@@ -511,9 +511,9 @@ class String {
 		if (is_array($conditionals[2])) {
 			$i = 0;
 			foreach ($conditionals[2] as $conditional) {
-				$matches = String::getSubstring($return_values[2][$i],'[',']');
+				$matches = String1::getSubstring($return_values[2][$i],'[',']');
 				$matches = (count($matches) > 0) ? $matches : array();
-				$matches1 = String::getSubstring($conditional,'[',']');
+				$matches1 = String1::getSubstring($conditional,'[',']');
 				$matches1 = (count($matches1) > 0) ? $matches1 : array();
 				preg_match_all('/([a-zA-Z_]+(\.){1}[a-zA-Z_]+)/',$conditional,$matches2);
 				$matches3 = (count($matches2[0]) > 0 && count($matches1) == 0) ? $matches2[0] : array();
@@ -560,7 +560,7 @@ class String {
 				}
 				
 				$conditional1 = $conditional;
-				$matches = String::getSubstring($conditional,'[',']');
+				$matches = String1::getSubstring($conditional,'[',']');
 				if ($matches) {
 					foreach ($matches as $match) {
 						if (strstr($match,',')) {
@@ -594,7 +594,7 @@ class String {
 				
 				if ($result) {
 					$formula = str_ireplace($conditional,'1==1',$formula);
-					$matches = String::getSubstring($return_values[2][$i],'[',']');
+					$matches = String1::getSubstring($return_values[2][$i],'[',']');
 					if ($matches) {
 						foreach ($matches as $match) {
 							$value = '';
@@ -632,7 +632,7 @@ class String {
 			
 			if (!$true) {
 				$i++;
-				$matches = String::getSubstring($return_values[2][$i],'[',']');
+				$matches = String1::getSubstring($return_values[2][$i],'[',']');
 				if ($matches) {
 					foreach ($matches as $match) {
 						if (strstr($match,',')) {
@@ -676,7 +676,7 @@ class String {
 				$v1 = ($is_formula) ? $v : str_replace('[','',str_replace(']','',$v));
 				
 				if (strstr($v1,'(') && strstr($v1,')')) {
-					$formula = String::doFormulaReplacements($v1,$row,1);
+					$formula = String1::doFormulaReplacements($v1,$row,1);
 					$v1 = eval("return ($formula);");
 				}
 				

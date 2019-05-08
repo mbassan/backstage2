@@ -168,7 +168,7 @@ class Grid {
 		$this->fields[$name] = array(
 			'name'=>$name,
 			'formula'=>$formula,
-			'header_caption'=>($header_caption) ? $header_caption : String::substring($formula,15),
+			'header_caption'=>($header_caption) ? $header_caption : String1::substring($formula,15),
 			'method_id'=>$CFG->method_id,
 			'cumulative_function'=>$cumulative_function,
 			'run_in_sql'=>$run_in_sql,
@@ -849,11 +849,11 @@ class Grid {
 				foreach ($data as $row) {
 					$alt = ($alt) ? false : 'alt';
 					if ($this->alert_condition1) {
-						$condition = String::doFormulaReplacements($this->alert_condition1,$row,1);
+						$condition = String1::doFormulaReplacements($this->alert_condition1,$row,1);
 						$alert_class1 = (eval("if ($condition) { return 1;} else { return 0;}")) ? 'alert1' : '';
 					}
 					if ($this->alert_condition2) {
-						$condition = String::doFormulaReplacements($this->alert_condition2,$row,1);
+						$condition = String1::doFormulaReplacements($this->alert_condition2,$row,1);
 						$alert_class2 = (eval("if ($condition) { return 1;} else { return 0;}")) ? 'alert2' : '';
 					}
 					$HTML .= '<tr class="'.$alt.' '.$alert_class1.' '.$alert_class2.'">';
@@ -946,7 +946,7 @@ class Grid {
 								}
 							}
 							if (!empty($properties['insert_new_record_when'])) {
-								$properties['insert_new_record_when'] = String::replaceConditionals('('.$properties['insert_new_record_when'].')',$row,$properties['f_id_field']);
+								$properties['insert_new_record_when'] = String1::replaceConditionals('('.$properties['insert_new_record_when'].')',$row,$properties['f_id_field']);
 								$result = eval("if ({$properties['insert_new_record_when']}) { return 0;} else { return 1;}");
 							}
 
@@ -1397,7 +1397,7 @@ class Grid {
 						case 'month':
 							$CFG->o_method_id = $filter['method_id'];
 							$CFG->o_method_name = 'filterMonth';
-							$form_filters->selectInput($name.'_month',$filter['caption'],false,$value,String::getMonthNames($filter['language']));
+							$form_filters->selectInput($name.'_month',$filter['caption'],false,$value,String1::getMonthNames($filter['language']));
 							$CFG->o_method_suppress = true;
 							$form_filters->HTML('<input type="hidden" name="month_fields[]" value="'.$name.'_month" />');
 							break;

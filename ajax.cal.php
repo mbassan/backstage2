@@ -1,6 +1,6 @@
 <?php
 	include('lib/common.php');
-	String::magicQuotesOff();
+	String1::magicQuotesOff();
 	
 	$rows = $_REQUEST['rows'];
 	if ($rows) {

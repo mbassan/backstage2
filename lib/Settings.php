@@ -57,7 +57,7 @@ class Settings {
 		$result = db_query_array ( $sql );
 		if ($result) {
 			foreach ($result as $key => $row) {
-				$result[$key]['value'] = String::checkSerialized(html_entity_decode($row['value']));
+				$result[$key]['value'] = String1::checkSerialized(html_entity_decode($row['value']));
 			}
 		}
 		return $result;
@@ -70,12 +70,12 @@ class Settings {
 		if ($result) {
 			foreach ($result as $row) {
 				$name = $row['name'];
-				$row['value'] = String::checkSerialized(html_entity_decode($row['value']));
+				$row['value'] = String1::checkSerialized(html_entity_decode($row['value']));
 				if (!is_array($row['value'])) {
 					$ret[$name] = (stristr($row['value'],'"')) ? htmlentities($row['value']) : $row['value'];
 				}
 				else {
-					$ret[$name] = String::fauxArray($row['value']);
+					$ret[$name] = String1::fauxArray($row['value']);
 				}
 			}
 		}

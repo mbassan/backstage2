@@ -76,11 +76,11 @@ class User {
 		if (empty($user) || empty($pass))
 			return false;
 			
-		if (String::sanitize($user,true,true)) {
+		if (String1::sanitize($user,true,true)) {
 			return false;
 		}
 			
-		if (String::sanitize($pass,true,true)) {
+		if (String1::sanitize($pass,true,true)) {
 			return false;
 		}
 		
@@ -89,7 +89,7 @@ class User {
 	}
 	
 	public static function getInfo($user,$table=false) {
-		if (String::sanitize($user,true,true))
+		if (String1::sanitize($user,true,true))
 			return false;
 		
 		$table = ($table) ? $table : 'admin';

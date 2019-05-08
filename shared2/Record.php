@@ -156,7 +156,7 @@ class Record {
 	function aggregate($name,$formula,$caption=false,$link_url=false,$run_in_sql=false,$in_form=false,$link_is_tab=false) {
 		global $CFG;
 		if (!$run_in_sql) {
-			$formula = String::doFormulaReplacements($formula,$this->row);
+			$formula = String1::doFormulaReplacements($formula,$this->row);
 			$text = eval("return $formula ;");
 		}
 		else {
@@ -187,11 +187,11 @@ class Record {
 
 		if (!$CFG->pm_editor) {
 			if (!$run_in_sql) {
-				$formula = String::doFormulaReplacements($formula,$this->row,1);
+				$formula = String1::doFormulaReplacements($formula,$this->row,1);
 			}
 			else {
 				if ($this->record_id > 0)
-					$formula = String::replaceConditionals($formula,$this->row,$formula_f_id_field);
+					$formula = String1::replaceConditionals($formula,$this->row,$formula_f_id_field);
 			}
 			$result = @eval("$formula");
 			//echo $formula.' | '.$result .' ||| ';
@@ -256,7 +256,7 @@ class Record {
 		
 		preg_match_all("/\[([A-Za-z0-9-_]+)\]/",$caption,$variables);
 		$variables[1] = array_combine($variables[1],$variables[1]);
-		$variables1 = String::parseVariables($variables[1],$this->row,$this->record_id);
+		$variables1 = String1::parseVariables($variables[1],$this->row,$this->record_id);
 		if (is_array($variables[1])) {
 			foreach ($variables[1] as $key) {
 				$caption = str_ireplace("[{$key}]",$variables1[$key],$caption);
@@ -563,7 +563,7 @@ class Record {
 		else {
 			if ($only_admin) {
 				if ($condition) {
-					$condition = String::doFormulaReplacements($condition,$this->row);
+					$condition = String1::doFormulaReplacements($condition,$this->row);
 					$restricted = ($restricted) ? $restricted : @eval("if ({$condition}) { return 0;} else { return 1;}");
 				}
 			}
@@ -620,7 +620,7 @@ class Record {
 				}
 				
 				if ($condition) {
-					$condition = String::doFormulaReplacements($condition,$this->row);
+					$condition = String1::doFormulaReplacements($condition,$this->row);
 					$restricted = ($restricted) ? $restricted : eval("if ({$condition}) { return 0;} else { return 1;}");
 				}
 			}

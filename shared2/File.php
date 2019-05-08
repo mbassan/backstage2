@@ -95,7 +95,7 @@ class File {
 	
 	function showUrl($url,$icon=true) {
 		if(strstr($url, "<embed")) {
-			$url = String::getUrlFromEmbed($url);
+			$url = String1::getUrlFromEmbed($url);
 		}
 		
 		if(strstr($url, "youtube")) 

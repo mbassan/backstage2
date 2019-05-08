@@ -1,6 +1,6 @@
 <?php
 date_default_timezone_set($CFG->default_timezone);
-String::magicQuotesOff();
+String1::magicQuotesOff();
 
 if ($_REQUEST['new_settings']) {
 	foreach ($_REQUEST['new_settings'] AS $name => $value) {

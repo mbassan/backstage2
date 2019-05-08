@@ -1,7 +1,7 @@
 <?php
 
 date_default_timezone_set($CFG->default_timezone);
-String::magicQuotesOff();
+String1::magicQuotesOff();
 
 if ($_REQUEST['tabs_form']) {
 	$form = new Form('tabs_form',false,false,false,$_REQUEST['table']);
