@@ -486,7 +486,7 @@ else {
 }
 if (!$CFG->bypass || ($CFG->url == 'edit_page' && !$_REQUEST['tab_bypass'])) {
 	echo '
-	<div class="credits" id="credits"><div>&copy; 2011 <a href="http://www.organic.com.pa">Organic Technologies</a>. Derechos reservados.</div></div>
+	<div class="credits" id="credits"><div>&copy; 2019 <a href="https://1ex.trade">1EX.TRADE</a>. All rights reserved.</div></div>
 	</body></html>'; 
 }
 
