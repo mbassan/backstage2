@@ -4,6 +4,8 @@ if (! isset ( $CFG->db_debug )) {
 	$CFG->db_debug = false;
 }
 
+$CFG->db_debug = true;
+
 $db_retries = 5;
 $db_timeout = 400; //milliseconds
 $db_transaction = array();
