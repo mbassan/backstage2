@@ -3344,7 +3344,7 @@ class Form {
 	
 		$method_id = ($CFG->o_method_id > 0) ? $CFG->o_method_id : $method_id;
 		$method_name = ($CFG->o_method_name) ? $CFG->o_method_name : $method_name;
-		$method_name = ($this->override_methods[$method_id]) ? $this->override_methods[$method_id] : $method_name;
+		$method_name = (isset($this) && $this->override_methods[$method_id]) ? $this->override_methods[$method_id] : $method_name;
 
 		$HTML = '
 		<input type="hidden" id="method" value="'.$method_name.'" />
