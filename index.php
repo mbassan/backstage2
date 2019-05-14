@@ -85,7 +85,7 @@ if (User::isLoggedIn() && !(User::$info['verified_authy'] == 'Y' && !($_SESSION[
 <div id="head">
 	<?
 	$logos = DB::getFiles('settings_files',1,'logo',1);
-	$logo_img = ($logos && file_exists('uploads/'.$logos[0]['name'].'_logo.png')) ? 'uploads/'.$logos[0]['name'].'_logo.png' : 'images/1ex1ex_back.png';
+	$logo_img = ($logos && file_exists('uploads/'.$logos[0]['name'].'_logo.png')) ? 'uploads/'.$logos[0]['name'].'_logo.png' : 'images/1ex_back.png';
 	?>
 	<div class="logo"><img src="<?= $logo_img ?>" /></div>
 	<div class="nav_buttons">
@@ -466,7 +466,7 @@ else {
 	}
 	
 	$logos = DB::getFiles('settings_files',1,'logo',1);
-	$logo_img = ($logos) ? 'uploads/'.$logos[0]['name'].'_logo.png' : 'images/index_back.png';
+	$logo_img = ($logos) ? 'uploads/'.$logos[0]['name'].'_logo.png' : 'images/1ex_back.png';
 
 	echo '<div class="login_box">
 			<div class="login_logo"><img src="'.$logo_img.'" title="Logo" alt="Logo" /></div>
