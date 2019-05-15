@@ -1622,7 +1622,7 @@ class Grid {
 			else
 				$value = $value;
 		}
-		elseif ($value > 0 && $value < 0.00005) {
+		elseif (($value > 0 || $value < 0) && $value < 0.00005) {
 			$value = number_format($value,8);
 		}
 		
