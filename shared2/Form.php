@@ -144,6 +144,7 @@ class Form {
 		$value = ($default_text) ? $default_text : $value;
 		$value = ($this->info && !$static) ? $this->info[$name] : $value;
 		$value = (strstr($value,'<')) ? htmlentities($value) : $value;
+		$value = (is_numeric($value) && $value < 0.0001) ? number_format($value,8) : $value;
 		$db_field_type = ($is_manual_array) ? 'text' : $db_field_type;
 		$onblur = ($is_manual_array) ? "onblur=\"prepend(this,'array:')\"" : '';
 		$onblur = ($default_text) ? "onblur=\"defaultText(this,'$default_text')\"" : '';
@@ -3344,7 +3345,7 @@ class Form {
 	
 		$method_id = ($CFG->o_method_id > 0) ? $CFG->o_method_id : $method_id;
 		$method_name = ($CFG->o_method_name) ? $CFG->o_method_name : $method_name;
-		$method_name = ($this->override_methods[$method_id]) ? $this->override_methods[$method_id] : $method_name;
+		$method_name = (isset($this) && $this->override_methods[$method_id]) ? $this->override_methods[$method_id] : $method_name;
 
 		$HTML = '
 		<input type="hidden" id="method" value="'.$method_name.'" />
