@@ -79,4 +79,8 @@ function setImageSize($image_file, $maxSize = 100) {
 	return $imgStr;
 }
 
+function debug($something) {
+	error_log(print_r(array($something),1),3,ini_get('error_log'));
+}
+
 ?>

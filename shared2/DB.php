@@ -813,14 +813,14 @@ class DB {
 			}
 		}
 		
-		$fields_array = self::serializeMultiples($fields_array,$table);
+		$fields_array = self::serializeMultiples($fields_array);
 		$tokenizers = array();
 		if (is_array($_REQUEST['tokenizers'])) {
 			foreach ($_REQUEST['tokenizers'] as $name) {
 				if (is_array($fields_array[$name]))
 					$fields_array[$name] = serialize($fields_array[$name]);
 				else {
-					$tokenizers[$name] = json_decode($fields_array[$name],true);
+					$tokenizers[$name] = json_decode(rawurldecode($fields_array[$name]),true);
 					unset($fields_array[$name]);
 				}
 			}
@@ -865,25 +865,14 @@ class DB {
 				}
 			}
 		}
-		if ($tokenizers) {
+		
+		if ($tokenizers && !strstr($table,'_files')) {
 			foreach ($tokenizers as $f_name => $values) {
-				$sql = 'SELECT * FROM '.$table.'_'.$f_name.'_relations WHERE f_id = '.$insert_id;
-				$result = db_query_array($sql);
-				
 				if (is_array($values)) {
-					if ($result) {
-						foreach ($result as $row) {
-							if (empty($values[$row['value']])) {
-								$sql = 'DELETE FROM '.$table.'_'.$f_name.'_relations WHERE value = '.$row['value'].' AND f_id = '.$insert_id;
-								db_query($sql);
-							}
-						}
-					}
-					
 					foreach ($values as $k => $v) {
-						db_insert($table.'_'.$f_name.'_relations',array('f_id'=>$insert_id,'value'=>$k,'label'=>$v),false,false,false,false,false,true);
+						db_insert($table.'_'.$f_name.'_relations',array('f_id'=>$id,'value'=>$k,'label'=>$v),false,false,false,false,false,true);
 					}
-				}	
+				}
 			}
 		}
 		
@@ -957,6 +946,7 @@ class DB {
 				}
 			}
 		}
+
 		if ($tokenizers && !strstr($table,'_files')) {
 			foreach ($tokenizers as $f_name => $values) {
 				$sql = 'SELECT * FROM '.$table.'_'.$f_name.'_relations WHERE f_id = '.$id;
@@ -1112,6 +1102,9 @@ class DB {
 	}
 	
 	public static function getTableValues($table,$f_id=false) {
+		if (!$f_id)
+			return false;
+
 		$sql = 'SELECT * FROM '.$table.' WHERE f_id = '.$f_id;
 		return db_query_array($sql);
 	}

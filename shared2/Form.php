@@ -1253,13 +1253,14 @@ class Form {
 				}
 			}
 		}
-		
+		/*
 		if (!$multiple) {
 			$selected_index = (strlen($value) != 0) ? $options_array[$value] : false;
 			$selected_index = (!is_numeric($value) && empty($selected_index)) ? $value : $selected_index;
 			$selected_index = ($options_array_is_subtable) ? $value : $selected_index;
 		}
 		else {
+			*/
 			if (!$is_tokenizer || strstr($value,'array:')) {
 				if (strstr($value,'array:')) {
 					$value1 = (is_array(@unserialize($value))) ? @unserialize($value) : $value;
@@ -1308,7 +1309,7 @@ class Form {
 						$tokenizer_values = $values;
 					}
 				}
-			}
+			//}
 		}
 		
 		$selected_index = (empty($selected_index)) ? $default_text : $selected_index;
@@ -1337,7 +1338,7 @@ class Form {
 				}
 				
 				$HTML .= "
-					<input type=\"text\" name=\"$name\" id=\"{$this->name}_{$id}{$j}_dummy\" $class ".$jscript." onkeypress=\"detectBackspace(event,this)\" $onclick $onblur $style/>
+					<input type=\"text\" autocomplete=\"false\" name=\"$name\" id=\"{$this->name}_{$id}{$j}_dummy\" $class ".$jscript." onkeypress=\"detectBackspace(event,this)\" $onclick $onblur $style/>
 				</div>$outside_jscript";
 			}
 			else {
