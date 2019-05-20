@@ -870,7 +870,7 @@ class DB {
 			foreach ($tokenizers as $f_name => $values) {
 				if (is_array($values)) {
 					foreach ($values as $k => $v) {
-						db_insert($table.'_'.$f_name.'_relations',array('f_id'=>$id,'value'=>$k,'label'=>$v),false,false,false,false,false,true);
+						db_insert($table.'_'.$f_name.'_relations',array('f_id'=>$insert_id,'value'=>$k,'label'=>$v),false,false,false,false,false,true);
 					}
 				}
 			}
@@ -898,14 +898,15 @@ class DB {
 		}
 		$fields_array = self::serializeMultiples($fields_array);
 		$tokenizers = array();
+
 		if (is_array($_REQUEST['tokenizers'])) {
 			foreach ($_REQUEST['tokenizers'] as $name) {
-				if (is_array($fields_array[$name]))
-					$fields_array[$name] = serialize($fields_array[$name]);
-				else {
-					$tokenizers[$name] = json_decode(rawurldecode($fields_array[$name]),true);
+					if (!is_array($fields_array[$name]))
+						$tokenizers[$name] = $fields_array[$name];
+					else
+						$tokenizers[$name] = json_decode(rawurldecode($fields_array[$name]),true);
+
 					unset($fields_array[$name]);
-				}
 			}
 		}
 		if (!$CFG->backstage_mode)
